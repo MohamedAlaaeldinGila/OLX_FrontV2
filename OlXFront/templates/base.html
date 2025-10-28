@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OlX Frontend</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- this is the navbar-->
+    {% include 'includes/navbar.html' %}
+
+    <!--This is the main-->
+    <main class="main_content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!--This is the footer-->
+    {% include 'includes/footer.html' %}
+
+    <!--This is javascript-->
+    {% block extra_scripts %}{% endblock %}
+
+</body>
+</html>
