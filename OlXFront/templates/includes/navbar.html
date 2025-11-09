@@ -1,18 +1,30 @@
+{% load i18n %}
 <nav class="navbar">
     <div class="nav-container">
         <div class="nav-logo">
-            <a href="">Gila Electric</a>
+            <a href="{% url 'home' %}">Gila Electric</a>
         </div>
         <ul class="navbar-menu">
-            <li><a href="">Home</a></li>
-            <li><a href="">Contact</a></li>
-            <li><a href="">About</a></li>
-            <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            <li><a id="home-link" href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li><a href="">{% trans "Contact" %}</a></li>
+            <li><a href="">{% trans "About" %}</a></li>
+            <li id="signup-link"><a href="{% url 'signup' %}">{% trans "Sign Up" %}</a></li>
         </ul>
         <div class="nav-search">
             <form action="" method="get">
-                <input type="text" name="q" placeholder="What are you looking for?" required>
+                <input type="text" name="q" placeholder="{% trans 'What are you looking for?' %}" required>
             </form>
+        </div>
+
+        <div class="nav-icons" id="nav-icons" style="display: none;">
+            <a href="{% url 'cart' %}" title="Cart"><i class="bi bi-cart3"></i></a>
+            <a href="{% url 'add_product' %}" title="Add Product"><i class="bi bi-plus-square"></i></a>
+            <a href="" title="Profile">
+                <i class="bi bi-person-circle"></i>
+            </a>
         </div>
     </div>
 </nav>
+<script>
+    loginurl = "{% url 'login' %}";
+</script>

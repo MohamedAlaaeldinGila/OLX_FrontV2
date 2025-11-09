@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const form = document.getElementById("login-form");
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
@@ -9,8 +9,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnLoading = loginBtn.querySelector(".btn-loading");
 
     const apiUrl = "http://127.0.0.1:8001/users/login/";
+    const profileUrl = "http://127.0.0.1:8001/users/profile/"; // endpoint to check if user is logged in
 
     console.log("Login JS loaded");
+
+    // --- Check if user is already logged in ---
+    const accessToken = localStorage.getItem("access");
+    if (accessToken) {
+        try {
+            const resp = await fetch(profileUrl, {
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                },
+            });
+            if (resp.ok) {
+                // User is logged in → redirect to signup/dashboard
+                console.log("User already logged in. Redirecting...");
+                window.location.href = "http://127.0.0.1:8000/"
+                return;
+            } 
+        } catch (err) {
+            console.error("Error checking auth:", err);
+        }
+    }
 
     // Email validation
     const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -48,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRFToken": getCSRFToken(), // only needed if it’s same-origin Django view
+                    "X-CSRFToken": getCSRFToken(),
                 },
                 body: JSON.stringify({ email, password }),
             });
@@ -56,22 +77,29 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (!response.ok) {
-                // Handle API errors
                 if (data.detail) {
                     passwordError.textContent = data.detail;
                 } else {
                     passwordError.textContent = "Invalid email or password.";
                 }
             } else {
-                // ✅ Successful login
-                localStorage.setItem("token", data.token); // save token if JWT
-                window.location.href = loginUrl
+                const access = data.tokens?.access;
+                const refresh = data.tokens?.refresh;
+
+                if (access && refresh) {
+                    localStorage.setItem("access", access);
+                    localStorage.setItem("refresh", refresh);
+                    console.log("✅ Tokens saved to localStorage");
+                } else {
+                    console.warn("⚠️ No tokens found in response:", data);
+                }
+
+                window.location.href = loginUrl; // redirect after login
             }
         } catch (error) {
             console.error("Login error:", error);
             passwordError.textContent = "Network error. Please try again.";
         } finally {
-            // Reset button
             btnText.style.display = "inline";
             btnLoading.style.display = "none";
             loginBtn.disabled = false;
@@ -79,7 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// --- Utility: CSRF helper (for Django API views if not JWT) ---
 function getCSRFToken() {
     const cookieValue = document.cookie
         .split("; ")

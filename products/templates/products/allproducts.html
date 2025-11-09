@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}All Products - Gila Electric{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'products/css/all_products.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+  <h3 class="mb-4 section-title">All Products</h3>
+  <div class="all-products-container" id="all-products-container">
+    <p>Loading products...</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'products/js/all_products.js' %}"></script>
+{% endblock %}

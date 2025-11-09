@@ -1,0 +1,127 @@
+.image-upload-box {
+border: 2px dashed #dee2e6;
+border-radius: 12px;
+background-color: #fafafa;
+height: 170px;
+position: relative;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: 0.3s;
+}
+
+#small-image-boxes .image-upload-box {
+border: 2px dashed #dee2e6;
+border-radius: 12px;
+background-color: #fafafa;
+height: 75px;
+position: relative;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: 0.3s;
+}
+
+.image-upload-box:hover {
+background-color: #fff;
+border-color: #dc3545;
+}
+
+#small-image-boxes .image-upload-box:hover {
+background-color: #fff;
+border-color: #dc3545;
+}
+
+.image-upload-box img.upload-icon {
+width: 35px;
+opacity: 0.6;
+}
+
+.image-upload-box.dragover {
+border-color: #dc3545;
+background-color: #fff0f0;
+}
+
+.image-upload-box img.preview {
+width: 100%;
+height: 100%;
+object-fit: cover;
+border-radius: 12px;
+}
+
+.quantity-control input {
+width: 70px;
+border-radius: 8px;
+text-align: center;
+}
+
+.btn-danger {
+background-color: #dc3545;
+border: none;
+}
+
+.btn-outline-danger:hover {
+background-color: #dc3545;
+color: white;
+}
+
+.category-dropdown {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  background: #fff;
+  display: none;
+  position: absolute;
+  width: 90%;
+  z-index: 100;
+}
+
+.category-item {
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.category-item:hover {
+  background-color: #f2f2f2;
+}
+
+.selected-category {
+  display: inline-block;
+  background: #fafafa;
+  color: #000;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+.selected-category:hover {
+  background-color: #dc3545;
+  color: white;
+}
+.selected-category span {
+  margin-left: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.card {
+  height: 500px !important;
+}
+
+#action-buttons {
+  margin-top: 40px;
+}
+
+/* Chrome, Safari, Edge */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

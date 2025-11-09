@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async() => {
     const form = document.getElementById("login-form"); // your signup form
     const firstNameInput = document.getElementById("Firstname");
     const secondNameInput = document.getElementById("secondname");
@@ -10,6 +10,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const loginBtn = document.getElementById("login-btn");
     const btnText = loginBtn.querySelector(".btn-text");
     const btnLoading = loginBtn.querySelector(".btn-loading");
+
+
+    const profileUrl = "http://127.0.0.1:8001/users/profile/";
+    const accessToken = localStorage.getItem("access");
+    if (accessToken) {
+        try {
+            const resp = await fetch(profileUrl, {
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                },
+            });
+            if (resp.ok) {
+                // User is logged in → redirect to signup/dashboard
+                console.log("User already logged in. Redirecting...");
+                window.location.href = "http://127.0.0.1:8000/"
+                return;
+            }
+        } catch (err) {
+            console.error("Error checking auth:", err);
+        }
+    }
 
     // Error containers
     const errors = {
@@ -115,7 +136,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
             } else {
-                window.location.href = loginUrl;
+                if (data.next_step === "verify_otp" || data.redirect === "/verify-otp/") {
+                    window.location.href = `${verifyOtpUrl}?email=${encodeURIComponent(email)}`;
+                } else {
+                    window.location.href = loginUrl;
+}
             }
 
         } catch (error) {

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Verify OTP{% endblock %}
+
+{% block content %}
+<form id="verify-otp-form">
+  <input type="text" id="otp" placeholder="Enter OTP" required>
+  <div id="error" class="form-error"></div>
+  <button type="submit" class="btn btn-primary">Verify OTP</button>
+</form>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  window.resetPasswordUrl = "{% url 'reset_password' %}";
+</script>
+<script src="{% static 'users/js/verify_reset_otp.js' %}"></script>
+{% endblock %}
+

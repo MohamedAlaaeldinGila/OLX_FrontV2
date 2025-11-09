@@ -18,9 +18,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from OlXFront import views
+from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('users/', include('users.urls')),
     path('', include('core.urls')),
+    path('products/', include('products.urls')),
+    path('api-root/', views.api_root, name='api_root'),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]

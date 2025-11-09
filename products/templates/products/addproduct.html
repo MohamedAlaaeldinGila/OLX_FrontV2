@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Add Product - Gila Electric{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'products/css/addproduct.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+
+  <!-- Breadcrumb -->
+  <div class="mb-4">
+    <small class="text-muted">
+      <a href="#" class="text-decoration-none text-dark">Account</a> /
+      <a href="#" class="text-decoration-none text-dark">Products</a> /
+      <span class="text-muted">Add Product</span>
+    </small>
+  </div>
+
+  <!-- ✅ Form starts HERE (wrapped correctly) -->
+  <form id="addProductForm" enctype="multipart/form-data" method="POST">
+    <div class="row g-4">
+
+      <!-- Left Column -->
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm p-4">
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Product Name</label>
+            <input type="text" id="product-title" name="title" class="form-control" placeholder="iPhone 15 Pro Max">
+            <small class="text-muted">Do not exceed 20 characters when entering the product name</small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Categories</label>
+            <div id="category-container" class="">
+              <input type="text" id="category-search" placeholder="Search categories..." class="form-control mb-2">
+              <div id="category-list" class="category-dropdown"></div>
+              <div id="selected-categories" class="mt-2"></div>
+            </div>
+            <small class="text-muted">You can select up to 5 categories.</small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Description</label>
+            <textarea id="product-description" name="description" rows="5" class="form-control" placeholder="Product Description"></textarea>
+            <small class="text-muted">Do not exceed 100 characters when entering the product description</small>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="col-md-8">
+        <div class="card border-0 shadow-sm p-4">
+          <h5 class="fw-semibold mb-3">Product Images</h5>
+
+          <div class="row g-3 mb-3">
+            <!-- 4 upload boxes -->
+            <div class="col-md-4">
+              <div class="image-upload-box" data-index="1">
+                <input type="file" accept="image/*" name="images" hidden>
+                <div class="upload-content text-center">
+                  <img src="{% static 'core/icons/image-icon.svg' %}" alt="upload icon" class="upload-icon mb-2">
+                  <p class="text-muted small">Click here or drop files</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="image-upload-box" data-index="2">
+                <input type="file" accept="image/*" name="images" hidden>
+                <div class="upload-content text-center">
+                  <img src="{% static 'core/icons/image-icon.svg' %}" alt="upload icon" class="upload-icon mb-2">
+                  <p class="text-muted small">Click here or drop files</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 d-flex flex-column gap-3" id="small-image-boxes">
+              <div class="image-upload-box flex-fill" data-index="3">
+                <input type="file" accept="image/*" name="images" hidden>
+                <div class="upload-content text-center">
+                  <img src="{% static 'core/icons/image-icon.svg' %}" alt="upload icon" class="upload-icon mb-2">
+                  <p class="text-muted small">Click here</p>
+                </div>
+              </div>
+              <div class="image-upload-box flex-fill" data-index="4">
+                <input type="file" accept="image/*" name="images" hidden>
+                <div class="upload-content text-center">
+                  <img src="{% static 'core/icons/image-icon.svg' %}" alt="upload icon" class="upload-icon mb-2">
+                  <p class="text-muted small">Click here</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <small class="text-muted d-block mb-4">
+            You need to add at least 4 images. Pay attention to the quality of the pictures you add.
+          </small>
+
+          <!-- Price + Quantity -->
+          <div class="row align-items-center mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Price</label>
+              <input type="number" step="0.01" id="product-price" name="price" class="form-control" placeholder="$0.00">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Stock Quantity</label>
+              <div class="d-flex align-items-center quantity-control">
+                <button class="btn btn-outline-secondary" type="button">-</button>
+                <input type="number" id="stock-quantity" name="stock_quantity" value="2" class="form-control text-center mx-2">
+                <button class="btn btn-outline-secondary" type="button">+</button>
+              </div>
+            </div>
+          </div>
+
+          <input type="hidden" name="is_active" value="true">
+
+          <!-- Buttons -->
+          <div id="action-buttons" class="d-flex justify-content-center gap-3">
+            <button id="addProductBtn" type="button" class="btn btn-danger px-4">Add Product</button>
+            <button type="button" class="btn btn-outline-danger px-4">Save Product</button>
+            <button type="button" class="btn btn-outline-secondary px-4">Schedule</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'products/js/addproduct.js' %}"></script>
+<script> const loginurl = "{% url 'login' %}"; </script>
+{% endblock %}

@@ -227,3 +227,10 @@
     padding: 0 1rem;
     position: relative;
 }
+
+/* RTL (Arabic) */
+html[dir="rtl"] .login-right {
+    padding-left: 0 !important;   /* remove left padding */
+    padding-right: 4rem !important; /* add padding on the right */
+    flex-direction: row-reverse; /* optional: reverse content inside */
+}

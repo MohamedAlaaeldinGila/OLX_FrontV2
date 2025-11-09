@@ -1,14 +1,25 @@
 <!DOCTYPE html>
-{% load static %}
-<html lang="en">
+{% load static i18n %}
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OlX Frontend</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     {% block extra_head %}{% endblock %}
 </head>
 <body>
+    <div class="language-bar text-center py-2">
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <select name="language" onchange="this.form.submit()">
+                <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+                <option value="ar" {% if LANGUAGE_CODE == 'ar' %}selected{% endif %}>العربية</option>
+            </select>
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        </form>
+    </div>
     <!-- this is the navbar-->
     {% include 'includes/navbar.html' %}
 
@@ -22,7 +33,97 @@
     {% include 'includes/footer.html' %}
 
     <!--This is javascript-->
+    <script>
+        function getTokens() {
+            return {
+                access: localStorage.getItem("access"),
+                refresh: localStorage.getItem("refresh"),
+            };
+            }
+
+            // Helper to set new tokens
+            function setTokens(access, refresh) {
+            if (access) localStorage.setItem("access", access);
+            if (refresh) localStorage.setItem("refresh", refresh);
+            }
+
+            // Refresh the token
+            async function refreshToken() {
+            const { refresh } = getTokens();
+            if (!refresh) return null;
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/api/token/refresh/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ refresh }),
+                });
+
+                if (response.ok) {
+                const data = await response.json();
+                setTokens(data.access, refresh); // update access only
+                return data.access;
+                } else {
+                console.warn("Failed to refresh token.");
+                localStorage.removeItem("access");
+                localStorage.removeItem("refresh");
+                return null;
+                }
+            } catch (err) {
+                console.error("Error refreshing token:", err);
+                return null;
+            }
+            }
+
+            // Use this function instead of fetch
+            async function authFetch(url, options = {}) {
+            let { access } = getTokens();
+
+            // Add authorization header
+            options.headers = options.headers || {};
+            options.headers["Authorization"] = `Bearer ${access}`;
+
+            let response = await fetch(url, options);
+
+            // If token expired → refresh and retry once
+            if (response.status === 401) {
+                const newAccess = await refreshToken();
+                if (newAccess) {
+                options.headers["Authorization"] = `Bearer ${newAccess}`;
+                response = await fetch(url, options);
+                }
+            }
+
+            return response;
+            }
+    </script>
+    <script>
+        window.api_root = null;
+
+        // promise that resolves to api_root (other scripts can await this)
+        window.apiRootPromise = (async function() {
+            try {
+                const res = await fetch("/api-root/");
+                if (!res.ok) throw new Error("Network response was not ok");
+                const data = await res.json();
+                console.log("Fetched api_root:", data.api_root);
+                window.api_root = data.api_root;
+                return data.api_root;
+            } catch (err) {
+                console.error("Failed to load api_root:", err);
+                throw err;
+            }
+        })();
+
+        // helper to get api_root (awaitable)
+        window.getApiRoot = async function() {
+            return await window.apiRootPromise;
+        };
+    </script>
     {% block extra_scripts %}{% endblock %}
+    <script src="{% static 'js/nav.js' %}"></script>
 
 </body>
 </html>

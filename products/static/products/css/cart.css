@@ -1,0 +1,69 @@
+.cart-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.quantity-box {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.qty-input {
+  width: 40px;
+  text-align: center;
+  border: none;
+  outline: none;
+}
+
+.qty-btn {
+  border: none;
+  background: #f8f9fa;
+  cursor: pointer;
+  padding: 4px 6px;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.qty-btn:hover {
+  background: #e9ecef;
+}
+
+.card h5 {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.btn {
+  background-color: #DB4444 !important;
+  border: none;
+}
+
+#apply-coupon {
+  background-color: #DB4444 !important;
+  border: none;
+}
+
+.cart-item {
+  position: relative;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: none;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  color: red;
+}
+
+.cart-item:hover .delete-btn {
+  display: block;
+}

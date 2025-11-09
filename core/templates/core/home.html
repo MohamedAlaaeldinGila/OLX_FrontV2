@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Home - Gila Electric{% endblock %}
+{% block title %}{% trans "Home - Gila Electric" %}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'core/css/home.css' %}">
@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block content %}
+{% load i18n %}
 <div class="home-container">
 
   <!-- 🏠 Hero Section with Categories + Carousel -->
@@ -20,7 +21,7 @@
       <div class="col-md-3">
         <div class="category-sidebar">
           <ul class="list-unstyled" id="sidebar-categories">
-            <li>Loading categories...</li>
+            <li>{% trans "Loading categories..." %}</li>
           </ul>
         </div>
       </div>
@@ -49,84 +50,94 @@
 
   <!-- ⚡ Flash Sales -->
   <section class="container mt-5 flash-sales-section">
-    <!-- 🔥 Header -->
-    <div class="d-flex align-items-center justify-content-between mb-3">
-        <div class="d-flex align-items-center">
-        <div class="today-square"></div>
-        <span class="today-text ms-2 me-3">Today’s</span>
-        <h3 class="section-title m-0">Flash Sales</h3>
-        <div class="d-flex align-items-center gap-3">
-        <!--timer-->
-        <div class="text-center">
-            <div class="fw-bold fs-4" id="days">03</div>
-            <small>Days</small>
-        </div>
-        <div class="text-center">
-            <div class="fw-bold fs-4" id="hours">12</div>
-            <small>Hours</small>
-        </div>
-        <div class="text-center">
-            <div class="fw-bold fs-4" id="minutes">45</div>
-            <small>Minutes</small>
-        </div>
-        
-        <div class="text-center">
-            <div class="fw-bold fs-4" id="seconds">22</div>
-            <small>Seconds</small>
-        </div>
+
+    <!-- 🟥 First Row: Today’s Box -->
+    <div class="d-flex align-items-center mb-2">
+      <div class="today-square"></div>
+      <span class="today-text ms-2">{% trans "Today’s" %}</span>
+    </div>
+
+    <!-- Second Row: Title + Timer + Arrows -->
+    <div class="flash-timer d-flex align-items-center gap-5">
+      <!-- Left: Flash Sales Title -->
+      <h3 class="section-title m-0">{% trans "Flash Sales" %}</h3>
+
+      <!-- Countdown Timer -->
+      <div class="flash-timer d-flex align-items-center gap-3">
+        <!-- Days -->
+        <div class="timer-unit text-center">
+          <div class="timer-label">{% trans "Days" %}</div>
+          <div class="timer-value" id="days">03</div>
         </div>
 
-        <!-- ➡️ Carousel Controls -->
-        <div>
-        <button class="btn btn-light border me-2" id="flash-prev">
-            <i class="bi bi-chevron-left"></i>
+        <div class="timer-separator">:</div>
+
+        <!-- Hours -->
+        <div class="timer-unit text-center">
+          <div class="timer-label">{% trans "Hours" %}</div>
+          <div class="timer-value" id="hours">12</div>
+        </div>
+
+        <div class="timer-separator">:</div>
+
+        <!-- Minutes -->
+        <div class="timer-unit text-center">
+          <div class="timer-label">{% trans "Minutes" %}</div>
+          <div class="timer-value" id="minutes">45</div>
+        </div>
+
+        <div class="timer-separator">:</div>
+
+        <!-- Seconds -->
+        <div class="timer-unit text-center">
+          <div class="timer-label">{% trans "Seconds" %}</div>
+          <div class="timer-value" id="seconds">22</div>
+        </div>
+      </div>
+
+
+      <!-- Right: Carousel Arrows -->
+      <div class="d-flex align-items-center gap-2 ms-auto">
+        <button class="btn btn-light border" id="flash-prev">
+          <i class="bi bi-chevron-left"></i>
         </button>
         <button class="btn btn-light border" id="flash-next">
-            <i class="bi bi-chevron-right"></i>
+          <i class="bi bi-chevron-right"></i>
         </button>
-        </div>
+      </div>
     </div>
 
-    <!-- 🛒 Flash Sales Slider -->
-    <div class="flash-carousel-wrapper position-relative overflow-hidden">
-        <div class="flash-carousel d-flex transition">
-        {% for product in flash_sales %}
-        <div class="flash-card card mx-2">
-            <div class="position-relative">
-            <button class="wishlist-btn position-absolute top-0 end-0 m-2 btn btn-light rounded-circle shadow-sm">
-                <i class="bi bi-heart"></i>
-            </button>
-            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-            </div>
-            <div class="card-body text-center">
-            <h6 class="card-title mb-1">{{ product.name }}</h6>
-            <div class="price mb-2">
-                <span class="text-danger fw-bold">${{ product.discount_price }}</span>
-                <span class="text-muted text-decoration-line-through small ms-2">${{ product.price }}</span>
-            </div>
-            <div class="rating text-warning">
-                ⭐⭐⭐⭐⭐ <span class="text-muted small">(120)</span>
-            </div>
-            </div>
+      <!-- 🛒 Flash Sales Slider -->
+      <div class="flash-carousel-wrapper position-relative overflow-hidden">
+        <div class="flash-carousel d-flex transition" id="flash-sales-container">
         </div>
-        {% empty %}
-        <p>No flash sales available.</p>
-        {% endfor %}
-        </div>
+      </div>
+
+      <!-- ➡️ View All Products Button -->
+      <div class="d-flex justify-content-center mt-4">
+        <a href="{% url 'all_products' %}" class="btn btn-primary px-4 py-2">
+          {% trans "View All Products" %}
+        </a>
+      </div>
+
+      <!-- ⬇️ Section Divider -->
+      <hr class="mt-4 mb-5">
     </div>
-    </section>
+
+
+  </section>
 
   <!-- 🧩 Categories Grid Section -->
   <section class="container mt-5">
-    <h3 class="mb-4 section-title">Shop by Category</h3>
+    <h3 class="mb-4 section-title">{% trans "Shop by Category" %}</h3>
     <div class="row text-center" id="grid-categories">
-      <p>Loading categories...</p>
+      <p>{% trans "Loading categories..." %}</p>
     </div>
   </section>
 
   <!-- 🏆 Best Selling -->
   <section class="container mt-5">
-    <h3 class="mb-4 section-title">🏆 Best Selling</h3>
+    <h3 class="mb-4 section-title">{% trans "Best Selling" %}</h3>
     <div class="row">
       {% for product in best_selling %}
       <div class="col-6 col-md-3 mb-4">
@@ -144,7 +155,7 @@
 
   <!-- 🧭 Explore Our Products -->
   <section class="container mt-5 mb-5">
-    <h3 class="mb-4 section-title">🧭 Explore Our Products</h3>
+    <h3 class="mb-4 section-title">{% trans "Explore Our Products" %}</h3>
     <div class="row">
       {% for product in explore %}
       <div class="col-6 col-md-3 mb-4">

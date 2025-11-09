@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Verify OTP{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'users/css/otp.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="verify-container">
+    <h3>Verify Your Email</h3>
+    <p>We’ve sent a 6-digit code to your email. Enter it below to verify your account.</p>
+
+    <form id="otp-form">
+        <input id="otp" type="text" maxlength="6" placeholder="Enter OTP code" required>
+        <div id="otp-error" class="form-error"></div>
+
+        <button class="btn btn-primary" id="verify-btn">Verify</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'users/js/verify_otp.js' %}"></script>
+{% endblock %}

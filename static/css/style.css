@@ -14,8 +14,8 @@ body {
 }
 /* Navbar Styles */
 .navbar {
-    background-color: #FFFFFF;  /* OLX green color */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #FFFFFF; 
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.3);
     padding: 1rem 0;
     position: sticky;
     top: 0;
@@ -46,7 +46,7 @@ body {
 }
 
 .nav-logo a:hover {
-    color: #f7f7f7;
+    color: #DB4444;
 }
 
 /* Navigation links in the middle */
@@ -75,7 +75,7 @@ body {
 
 .navbar-menu a:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    color: #f7f7f7;
+    color: #DB4444;
 }
 
 /* Search on the right */
@@ -107,7 +107,6 @@ body {
 
 .nav-search button {
     padding: 0.75rem 1.5rem;
-    background-color: #00aaff;
     color: white;
     border: none;
     border-radius: 4px;
@@ -128,6 +127,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
+    margin-bottom: 5rem !important;
 }
 
 
@@ -274,4 +274,75 @@ body {
     .nav-search button {
         padding: 0.75rem 1rem;
     }
+}
+
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav-icons a {
+  color: #333;
+  font-size: 1.4rem;
+  text-decoration: none;
+}
+
+.nav-icons a:hover {
+  color: #DB4444;
+}
+
+.dropdown li {
+  padding: 5px 10px;
+}
+
+.dropdown li a {
+  color: #333;
+  text-decoration: none;
+}
+
+
+.active-link {
+  font-weight: bold !important;
+  text-decoration: underline !important;
+}
+
+.nav-icons a {
+  display: inline-flex;
+  font-size: 1.5rem; /* or whatever size */
+  margin-left: 10px;
+}
+
+
+.language-bar {
+    background-color: #000000;
+    padding: 10px 0px;
+    text-align: left;
+}
+
+.language-bar select {
+    background-color: #000000;
+    color: #FFFFFF;
+    border: none;
+    padding: 2px 8px;
+    font-size: 0.9rem;
+}
+
+html[dir="rtl"] .language-bar {
+    text-align: right; /* keep centered or right if you want */
+}
+
+
+body[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+body[dir="rtl"] .navbar-menu {
+  flex-direction: row-reverse;
+}
+
+body[dir="rtl"] .nav-search input {
+  text-align: right;
 }

@@ -1,0 +1,64 @@
+/* ===== All Products Page ===== */
+.all-products-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  padding: 20px 0;
+}
+
+/* Reuse flash-card style */
+.flash-card {
+  border-radius: 12px;
+  border: none !important;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+}
+
+.flash-card:hover {
+  transform: translateY(-5px);
+}
+
+.flash-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Keep existing home.css styles for sale badge, wishlist, etc. */
+.sale-badge {
+  background-color: #DB4444;
+  color: white;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 10;
+}
+
+.add-to-cart-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.flash-card:hover .add-to-cart-overlay {
+  opacity: 1;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .flash-img {
+    height: 150px;
+  }
+}
